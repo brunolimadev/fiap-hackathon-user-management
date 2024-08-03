@@ -4,6 +4,10 @@ import br.com.fiap.usermanagement.domain.entities.User;
 import br.com.fiap.usermanagement.infra.persistence.entities.UserEntity;
 
 public class UserEntityMapper {
+
+    private UserEntityMapper() {
+    }
+
     public static UserEntity toEntity(User user) {
         return new UserEntity(
                 user.getName(),

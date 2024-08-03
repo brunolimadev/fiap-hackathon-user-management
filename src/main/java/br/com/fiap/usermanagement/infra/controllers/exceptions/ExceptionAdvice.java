@@ -20,4 +20,14 @@ public class ExceptionAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDto);
     }
 
+    @ExceptionHandler({ UserNotFoundException.class })
+    public ResponseEntity<ErrorDto> handleRuntimeException(UserNotFoundException userNotFoundException) {
+        ErrorDto errorDto = new ErrorDto(
+                "Ocorreu um erro interno",
+                userNotFoundException.getMessage(),
+                String.valueOf(HttpStatus.UNPROCESSABLE_ENTITY.value()), null);
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorDto);
+    }
+
 }

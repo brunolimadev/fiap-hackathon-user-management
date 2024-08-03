@@ -6,6 +6,10 @@ import br.com.fiap.usermanagement.infra.controllers.dtos.response.GetUserByEmail
 import br.com.fiap.usermanagement.infra.enums.RoleEnum;
 
 public class GetUserByEmailMapper {
+
+    private GetUserByEmailMapper() {
+    }
+
     public static GetUserByEmailDto toDto(User user) {
         return new GetUserByEmailDto(
                 user.getId(),

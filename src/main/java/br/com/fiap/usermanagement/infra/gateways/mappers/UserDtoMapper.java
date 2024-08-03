@@ -5,6 +5,9 @@ import br.com.fiap.usermanagement.infra.controllers.dtos.request.UserDto;
 
 public class UserDtoMapper {
 
+    private UserDtoMapper() {
+    }
+
     public static UserDto toDto(User user) {
         return new UserDto(
                 user.getName(),
