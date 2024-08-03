@@ -18,6 +18,7 @@ import br.com.fiap.usermanagement.infra.gateways.mappers.GetUserByEmailMapper;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserDtoMapper;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 
 @RestController
 @RequestMapping("/users")
@@ -32,7 +33,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<GetUserByEmailDto> getByEmail(@Valid @RequestParam("byEmail") String email) throws Exception {
+    public ResponseEntity<GetUserByEmailDto> getByEmail(@RequestParam("byEmail") String email)
+            throws Exception {
 
         GetUserByEmailDto response = GetUserByEmailMapper.toDto(getUserByEmailInteractor.getUserByEmail(email));
 

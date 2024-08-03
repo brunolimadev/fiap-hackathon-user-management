@@ -80,7 +80,7 @@ class UserControllerTest {
     }
 
     @Test
-    void whenCreateUserWithInvalidEmail_thenStatus422() throws Exception {
+    void whenCreateUserWithInvalidEmail_thenStatus400() throws Exception {
         UserDto request = new UserDto(
                 "teste",
                 "test.com.br",
@@ -95,9 +95,8 @@ class UserControllerTest {
         mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isBadRequest());
 
-        verify(createUserInteractor, times(1)).create(any(User.class));
     }
 
     @Test

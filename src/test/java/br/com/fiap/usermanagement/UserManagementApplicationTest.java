@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase
-class UserManagementApplicationTests {
+class UserManagementApplicationTest {
 
 	@Test
 	void contextLoads() {
