@@ -80,6 +80,27 @@ class UserControllerTest {
     }
 
     @Test
+    void whenCreateUserWithInvalidEmail_thenStatus422() throws Exception {
+        UserDto request = new UserDto(
+                "teste",
+                "test.com.br",
+                "Teste@123",
+                LocalDateTime.now(),
+                UserRoleEnum.ROLE_USER);
+
+        User user = UserDtoMapper.toDomain(request);
+
+        when(createUserInteractor.create(any(User.class))).thenReturn(user);
+
+        mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(request)))
+                .andExpect(status().isCreated());
+
+        verify(createUserInteractor, times(1)).create(any(User.class));
+    }
+
+    @Test
     void whenGetUserByEmailReturnsSuccess_thenStatus200() throws Exception {
         GetUserByEmailDto response = new GetUserByEmailDto(
                 UUID.randomUUID(),
