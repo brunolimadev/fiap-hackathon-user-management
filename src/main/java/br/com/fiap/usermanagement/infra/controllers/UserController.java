@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import br.com.fiap.usermanagement.infra.controllers.dtos.request.UserDto;
 import br.com.fiap.usermanagement.infra.controllers.dtos.response.GetUserByEmailDto;
 import br.com.fiap.usermanagement.infra.gateways.mappers.GetUserByEmailMapper;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserDtoMapper;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import jakarta.validation.Valid;
 
 @RestController

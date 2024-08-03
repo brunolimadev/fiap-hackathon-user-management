@@ -4,6 +4,7 @@ import br.com.fiap.usermanagement.application.gateways.UserGateway;
 import br.com.fiap.usermanagement.domain.entities.User;
 
 public class GetUserByEmailInteractor {
+
     private final UserGateway userGateway;
 
     public GetUserByEmailInteractor(UserGateway userGateway) {

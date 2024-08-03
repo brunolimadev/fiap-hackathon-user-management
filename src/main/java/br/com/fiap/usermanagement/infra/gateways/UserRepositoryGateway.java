@@ -35,6 +35,7 @@ public class UserRepositoryGateway implements UserGateway {
         UserEntity userEntity = UserEntityMapper.toEntity(user);
 
         userEntity.setPassword(encrypedPassoword);
+        userEntity.setActive(true);
 
         UserEntity result = this.userRepository.save(userEntity);
 
