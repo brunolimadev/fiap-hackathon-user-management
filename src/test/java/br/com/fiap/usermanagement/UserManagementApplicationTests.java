@@ -1,10 +1,10 @@
-package br.com.fiap.fiap_hackathon_user_management;
+package br.com.fiap.usermanagement;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FiapHackathonUserManagementApplicationTests {
+class UserManagementApplicationTests {
 
 	@Test
 	void contextLoads() {
