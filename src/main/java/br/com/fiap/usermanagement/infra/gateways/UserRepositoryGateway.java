@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.fiap.usermanagement.application.gateways.UserGateway;
 import br.com.fiap.usermanagement.domain.entities.User;
+import br.com.fiap.usermanagement.infra.controllers.exceptions.UserNotFoundException;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserEntityMapper;
 import br.com.fiap.usermanagement.infra.persistence.UserRepository;
 import br.com.fiap.usermanagement.infra.persistence.entities.UserEntity;
@@ -22,12 +23,12 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(User user) throws UserNotFoundException {
 
         Optional<UserEntity> userFounded = this.userRepository.findByEmail(user.getEmail());
 
         if (userFounded.isPresent()) {
-            throw new RuntimeException("Erro ao criar o usuário! Por favor, tente novamente.");
+            throw new UserNotFoundException("Erro ao criar o usuário! Por favor, tente novamente.");
         }
 
         String encrypedPassoword = this.passwordEncoder.encode(user.getPassword());
@@ -43,12 +44,12 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email) throws UserNotFoundException {
 
         Optional<UserEntity> userFounded = this.userRepository.findByEmail(email);
 
         if (!userFounded.isPresent()) {
-            throw new RuntimeException("Usuário não encontrado!");
+            throw new UserNotFoundException("Usuário não encontrado!");
         }
 
         UserEntity userEntity = userFounded.get();

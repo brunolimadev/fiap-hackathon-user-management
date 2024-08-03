@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import br.com.fiap.usermanagement.application.gateways.UserGateway;
 import br.com.fiap.usermanagement.domain.entities.User;
 import br.com.fiap.usermanagement.domain.enums.UserRoleEnum;
+import br.com.fiap.usermanagement.infra.controllers.exceptions.UserNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserInteractorTest {
@@ -29,7 +30,7 @@ class CreateUserInteractorTest {
     }
 
     @Test
-    void testCreateUser() {
+    void testCreateUser() throws UserNotFoundException {
 
         User request = new User("teste", "test@test.com.br", "Teste@123", LocalDateTime.now(),
                 UserRoleEnum.ROLE_USER);

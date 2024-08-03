@@ -13,6 +13,7 @@ import br.com.fiap.usermanagement.application.usecases.CreateUserInteractor;
 import br.com.fiap.usermanagement.application.usecases.GetUserByEmailInteractor;
 import br.com.fiap.usermanagement.infra.controllers.dtos.request.UserDto;
 import br.com.fiap.usermanagement.infra.controllers.dtos.response.GetUserByEmailDto;
+import br.com.fiap.usermanagement.infra.controllers.exceptions.UserNotFoundException;
 import br.com.fiap.usermanagement.infra.gateways.mappers.GetUserByEmailMapper;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserDtoMapper;
 
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<GetUserByEmailDto> getByEmail(@Valid @RequestParam("byEmail") String email) {
+    public ResponseEntity<GetUserByEmailDto> getByEmail(@Valid @RequestParam("byEmail") String email) throws Exception {
 
         GetUserByEmailDto response = GetUserByEmailMapper.toDto(getUserByEmailInteractor.getUserByEmail(email));
 
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody UserDto request) {
+    public ResponseEntity<?> create(@Valid @RequestBody UserDto request) throws UserNotFoundException {
 
         createUserInteractor.create(UserDtoMapper.toDomain(request));
 

@@ -29,7 +29,7 @@ class GetUserByEmailInteractorTest {
     }
 
     @Test
-    void testGetUserByEmail() {
+    void testGetUserByEmail() throws Exception {
         String email = "mail@mail.com.br";
 
         User user = new User("teste", "mail@mail.com.br", "Teste@123", LocalDateTime.now(),

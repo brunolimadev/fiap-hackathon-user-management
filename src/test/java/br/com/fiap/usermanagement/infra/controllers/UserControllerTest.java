@@ -14,10 +14,12 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -30,17 +32,22 @@ import br.com.fiap.usermanagement.domain.entities.User;
 import br.com.fiap.usermanagement.domain.enums.UserRoleEnum;
 import br.com.fiap.usermanagement.infra.controllers.dtos.request.UserDto;
 import br.com.fiap.usermanagement.infra.controllers.dtos.response.GetUserByEmailDto;
+import br.com.fiap.usermanagement.infra.controllers.exceptions.ExceptionAdvice;
+import br.com.fiap.usermanagement.infra.controllers.exceptions.UserNotFoundException;
 import br.com.fiap.usermanagement.infra.enums.RoleEnum;
 import br.com.fiap.usermanagement.infra.gateways.mappers.GetUserByEmailMapper;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserDtoMapper;
 
-@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@SpringBootTest
+@ActiveProfiles("test")
+@Import(ExceptionAdvice.class)
 class UserControllerTest {
 
-    @Mock
+    @MockBean
     private CreateUserInteractor createUserInteractor;
 
-    @Mock
+    @MockBean
     private GetUserByEmailInteractor getUserByEmailInteractor;
 
     private MockMvc mockMvc;
@@ -52,7 +59,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deveRetornarSucessoAoCriarUmUsuario() throws Exception {
+    void whenCreateUserReturnsSuccess_thenStatus200() throws Exception {
         UserDto request = new UserDto(
                 "teste",
                 "test@test.com.br",
@@ -73,7 +80,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deveRetornarSucessoAoBuscarUmUsuárioPeloEmail() throws Exception {
+    void whenGetUserByEmailReturnsSuccess_thenStatus200() throws Exception {
         GetUserByEmailDto response = new GetUserByEmailDto(
                 UUID.randomUUID(),
                 "teste",
@@ -92,6 +99,16 @@ class UserControllerTest {
 
         verify(getUserByEmailInteractor, times(1)).getUserByEmail(anyString());
 
+    }
+
+    @Test
+    void whenGetUserByEmailThrowsUserNotFountException_thenStatus500() throws Exception {
+
+        when(getUserByEmailInteractor.getUserByEmail(anyString()))
+                .thenThrow(new UserNotFoundException("Usuário não encontrado"));
+
+        mockMvc.perform(get("/users?byEmail=teste@email.com"))
+                .andExpect(status().is5xxServerError());
     }
 
 }
