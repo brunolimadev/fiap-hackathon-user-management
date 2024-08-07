@@ -1,0 +1,87 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8081/user-management/api/v1
+    description: Generated server url
+paths:
+  /users:
+    get:
+      tags:
+        - user-controller
+      operationId: getByEmail
+      parameters:
+        - name: byEmail
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GetUserByEmailDto'
+    post:
+      tags:
+        - user-controller
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+components:
+  schemas:
+    UserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          maxLength: 12
+          minLength: 6
+          pattern: ^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).*$
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        role:
+          type: string
+          enum:
+            - ROLE_ADMIN
+            - ROLE_USER
+    GetUserByEmailDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        role:
+          type: string
+          enum:
+            - ROLE_ADMIN
+            - ROLE_USER
