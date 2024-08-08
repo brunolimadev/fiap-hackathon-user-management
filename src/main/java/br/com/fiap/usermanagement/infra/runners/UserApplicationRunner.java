@@ -29,17 +29,16 @@ public class UserApplicationRunner implements CommandLineRunner {
         User userDefault = new User(
                 "adj2",
                 "adj2@fiap.com.br",
-                "adj@1234",
+                "adj2@1234",
                 LocalDateTime.now(),
                 UserRoleEnum.ROLE_ADMIN);
 
+        log.info("User {} created succesfully", userDefault.getEmail());
         try {
             this.createUserInteractor.create(userDefault);
         } catch (UserNotFoundException e) {
             log.info("User {} has already created", userDefault.getEmail());
         }
-
-        log.info("User {} created succesfully", userDefault.getEmail());
 
     }
 

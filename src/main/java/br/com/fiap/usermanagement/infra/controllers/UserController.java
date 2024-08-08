@@ -16,9 +16,7 @@ import br.com.fiap.usermanagement.infra.controllers.dtos.response.GetUserByEmail
 import br.com.fiap.usermanagement.infra.controllers.exceptions.UserNotFoundException;
 import br.com.fiap.usermanagement.infra.gateways.mappers.GetUserByEmailMapper;
 import br.com.fiap.usermanagement.infra.gateways.mappers.UserDtoMapper;
-
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 
 @RestController
 @RequestMapping("/users")
