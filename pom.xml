@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>fiap-hackathon-user-management</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>fiap-hackathon-user-management</name>
 	<description>User management project</description>
 	<url/>
